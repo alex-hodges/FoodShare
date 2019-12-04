@@ -64,7 +64,4 @@ app.use("/recipes/:id/comments", commentRoutes);
 app.use("/recipes/:id/reviews", reviewRoutes);
 
 //SERVER 
-var port = process.env.PORT || 3000;
-app.listen(port, function(){
-    console.log("The FoodShare Server Has Started!");
-});
+app.listen(process.env.PORT, process.env.IP);
