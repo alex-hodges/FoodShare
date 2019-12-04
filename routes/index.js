@@ -35,7 +35,7 @@ router.post("/register", function(req, res){
         
         });
     
-     if(req.body.adminCode === "secretcode123") {
+     if(req.body.adminCode === process.env.ADMCODE ) {
       newUser.isAdmin = true;
     }
     //passport-local-mongoose
