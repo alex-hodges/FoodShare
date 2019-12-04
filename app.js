@@ -21,7 +21,8 @@ var commentRoutes = require("./routes/comments"),
     indexRoutes      = require("./routes/index");
  
 //Connects to MongoDB
-mongoose.connect( process.env.DATABASEURL, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.DATABASEURL);
+
 //in order to read HTTP POST data , we have to use "body-parser" node module. body-parser is a piece of express middleware that reads a form's input and stores it as a javascript object accessible through req.body.
 app.use(bodyParser.urlencoded({extended: true}));
 //Sets ejs as the view engine
