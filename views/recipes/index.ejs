@@ -1,0 +1,64 @@
+<% include ../partials/header %>
+
+<% if(currentUser && currentUser.isAdmin){ %>
+    <h1> You're an admin</h1>
+<% } %>
+
+<header class="jumbotron">
+    <div class="container">
+        <h1>Welcome to Recipes</h1>
+            <p>View our hand-picked recipes from all over the world</p>
+            <p><a class="btn btn-primary btn-lg" href="recipes/new">Add New Recipe</a>
+            </p>
+            <p>
+              <form action="/recipes" method="GET" class="form-inline" id="recipe-search">
+                <div class="form-group">
+                  <input type="text" name="search" placeholder="Recipe search..." class="form-control">
+                  <input type="submit" value="Search" class="btn btn-default">
+                </div>
+              </form>
+             </p>
+         </div>
+     </header>
+    </div>
+</header>
+
+
+
+<% /* 1. putting in the recipes object from app.js... 
+
+ 2. because the 'recipe' is used in a function() it is in the local scope
+ 
+ 3. forEach is an array method... recipes is an array.
+ 
+ 4. for each 'recipe' within the recipe array I want to see each object. the parameter recipe allows you to access/see each one. it could be called anything... but recipe fits the context of what we're working with' */ 
+
+%>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">  
+        <% recipes.forEach(function(recipe){%>
+
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card">
+                <img class="card-img-top" src="<%= recipe.image %>" alt="<%= recipe.name %>">
+                    <div class="card-body">
+                    <h5 class="card-title"><%= recipe.name %></h5>
+                        <% if (recipe.rating === 0) { %>
+                         <em>No reviews yet.</em>   
+                       <% } else { %> 
+                        
+                        <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star <% if (recipe.rating > 1.5) { %> checked <% } %>"></span>
+                    <span class="fa fa-star <% if (recipe.rating > 2.5) { %> checked <% } %>"></span>
+                    <span class="fa fa-star <% if (recipe.rating > 3.5) { %> checked <% } %>"></span>
+                    <span class="fa fa-star <% if (recipe.rating > 4.5) { %> checked <% } %>"></span>
+                    <% } %>
+                    </div>
+    <p> <a href="/recipes/<%= recipe._id %>" class="btn btn-primary">More Info</a></p>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+    <a href="/"> Go back to home page</a> 
+
+    
+<% include ../partials/footer %>
