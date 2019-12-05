@@ -7,13 +7,20 @@ var async = require("async");
 var nodemailer = require("nodemailer");
 var crypto      = require("crypto");
 
-
+//==========
 //ROOT ROUTE
+//==========
 router.get("/", function (req, res) {
     res.render("landing");
 });
 
+//===========
+//ABOUT ROUTE
+//===========
 
+router.get("/about", function (req, res){
+   res.render("about"); 
+});
 
 //========================
 //AUTHENTICATION ROUTES
@@ -51,8 +58,9 @@ router.post("/register", function(req, res){
         });
     });
 });
+//=================
 // SHOW LOGIN FORM
-
+//=================
 router.get("/login", function (req, res){
    res.render("login", {page: "login"}); 
 });
@@ -66,16 +74,19 @@ router.post("/login", passport.authenticate("local",
 }),      function(req, res){
     
 });
-
+//============
 //LOGOUT ROUTE 
+//============
 
 router.get("/logout", function(req, res){
    req.logout();
     req.flash("success", "You have logged out!");
     res.redirect("/recipes");
 });
-
+//================
 // FORGOT PASSWORD
+//================
+
 router.get("/forgot", function(req, res) {
   res.render("forgot");
 });
