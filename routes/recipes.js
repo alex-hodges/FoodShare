@@ -12,31 +12,49 @@ function escapeRegex(text) {
 
 //INDEX - show all recipes
 router.get("/", function(req, res){
-   // eval(require("locus"));
-  if(req.query.search) {
-      const regex = new RegExp(escapeRegex(req.query.search), "gi");
-      // Get all recipes from DB
-      Recipe.find({"name": regex}, function(err, allRecipes){
-         if(err){
-            console.log(err);
-         } else {
-            res.render("recipes/index", {recipes:allRecipes });
-         }
-      });
-  } else {
-      // Get all recipes from DB
-      Recipe.find({}, function(err, allRecipes){
-         if(err){
-             console.log(err);
-         } else {
-            if(req.xhr) {
-              res.json(allRecipes);
-            } else {
-              res.render("recipes/index",{recipes: allRecipes, page: "recipes"});
-            }
-         }
-      });
-  }
+    var perPage = 8;
+    var pageQuery = parseInt(req.query.page);
+    var pageNumber = pageQuery ? pageQuery : 1;
+    var noMatch = null;
+    if(req.query.search) {
+        const regex = new RegExp(escapeRegex(req.query.search), 'gi');
+        Recipe.find({name: regex}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allRecipes) {
+            Recipe.count({name: regex}).exec(function (err, count) {
+                if (err) {
+                    console.log(err);
+                    res.redirect("back");
+                } else {
+                    if(allRecipes.length < 1) {
+                        noMatch = "No recipes match that query, please try again.";
+                    }
+                    res.render("recipes/index", {
+                        recipes: allRecipes,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        noMatch: noMatch,
+                        search: req.query.search
+                    });
+                }
+            });
+        });
+    } else {
+        // get all recipes from DB
+        Recipe.find({}).skip((perPage * pageNumber) - perPage).limit(perPage).exec(function (err, allRecipes) {
+            Recipe.count().exec(function (err, count) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("recipes/index", {
+                        recipes: allRecipes,
+                        current: pageNumber,
+                        pages: Math.ceil(count / perPage),
+                        noMatch: noMatch,
+                        search: false
+                    });
+                }
+            });
+        });
+    }
 });
 // CREATE ROUTE - add new recipe to DB
 router.post("/", middleware.isLoggedIn, function(req, res) {
