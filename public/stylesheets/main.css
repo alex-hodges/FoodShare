@@ -74,6 +74,14 @@ body {
 	width: 100%;
 }
 
+/* Display recipes */ 
+
+.recipes-display {
+    display:flex;
+    flex-wrap: wrap;
+    margin: 1px;
+}
+
 /* Recipe show page delete button */
 .delete-form {
 	display: inline-block;
