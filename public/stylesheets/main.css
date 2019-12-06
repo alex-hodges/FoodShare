@@ -76,7 +76,7 @@ body {
 
 /* Display recipes */ 
 
-.recipes-display {
+#recipes-display {
     display:flex;
     flex-wrap: wrap;
     margin: 1px;
