@@ -5,21 +5,21 @@ var Review = require("../models/review");
 // all the middleare goes here
 var middlewareObj = {};
 
-middlewareObj.checkRecipeOwnership = function(req, res, next) {
- if(req.isAuthenticated()){
-        Recipe.findById(req.params.id, function(err, foundRecipe){
-           if(err){
-               req.flash("error", "Recipe not found");
-               res.redirect("back");
-           }  else {
-               // does user own the recipe?
-            if(foundRecipe.author.id.equals(req.user._id) || req.user.isAdmin) {
-                next();
-            } else {
-                req.flash("error", "You don't have permission to do that");
+middlewareObj.checkRecipeOwnership = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        Recipe.findById(req.params.id, function (err, foundRecipe) {
+            if (err) {
+                req.flash("error", "Recipe not found");
                 res.redirect("back");
+            } else {
+
+                if (foundRecipe.author.id.equals(req.user._id) || req.user.isAdmin) {
+                    next();
+                } else {
+                    req.flash("error", "You don't have permission to do that");
+                    res.redirect("back");
+                }
             }
-           }
         });
     } else {
         req.flash("error", "You need to be logged in to do that");
@@ -27,20 +27,19 @@ middlewareObj.checkRecipeOwnership = function(req, res, next) {
     }
 }
 
-middlewareObj.checkCommentOwnership = function(req, res, next) {
- if(req.isAuthenticated()){
-        Comment.findById(req.params.comment_id, function(err, foundComment){
-           if(err){
-               res.redirect("back");
-           }  else {
-               // does user own the comment?
-            if(foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
-                next();
-            } else {
-                req.flash("error", "You don't have permission to do that");
+middlewareObj.checkCommentOwnership = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        Comment.findById(req.params.comment_id, function (err, foundComment) {
+            if (err) {
                 res.redirect("back");
+            } else {
+                if (foundComment.author.id.equals(req.user._id) || req.user.isAdmin) {
+                    next();
+                } else {
+                    req.flash("error", "You don't have permission to do that");
+                    res.redirect("back");
+                }
             }
-           }
         });
     } else {
         req.flash("error", "You need to be logged in to do that");
@@ -48,14 +47,14 @@ middlewareObj.checkCommentOwnership = function(req, res, next) {
     }
 }
 
-middlewareObj.checkReviewOwnership = function(req, res, next) {
-    if(req.isAuthenticated()){
-        Review.findById(req.params.review_id, function(err, foundReview){
-            if(err || !foundReview){
+middlewareObj.checkReviewOwnership = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        Review.findById(req.params.review_id, function (err, foundReview) {
+            if (err || !foundReview) {
                 res.redirect("back");
-            }  else {
-                // does user own the comment?
-                if(foundReview.author.id.equals(req.user._id)) {
+            } else {
+
+                if (foundReview.author.id.equals(req.user._id)) {
                     next();
                 } else {
                     req.flash("error", "You don't have permission to do that");
@@ -94,8 +93,8 @@ middlewareObj.checkReviewExistence = function (req, res, next) {
     }
 };
 
-middlewareObj.isLoggedIn = function(req, res, next){
-    if(req.isAuthenticated()){
+middlewareObj.isLoggedIn = function (req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     req.flash("error", "You need to be logged in to do that");

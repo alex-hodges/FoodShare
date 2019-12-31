@@ -1,10 +1,11 @@
 var mongoose = require("mongoose");
 
-//SCHEMA ALWAYS ADDED AS A VARIABLE FIRST
-
-var commentSchema = mongoose.Schema ({
+var commentSchema = mongoose.Schema({
     text: String,
-    createdAt: { type: Date, default: Date.now},
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
@@ -13,5 +14,5 @@ var commentSchema = mongoose.Schema ({
         username: String,
     }
 });
-// FIRST THE NAME OF MODEL ("Comment") then the schema
+
 module.exports = mongoose.model("Comment", commentSchema);

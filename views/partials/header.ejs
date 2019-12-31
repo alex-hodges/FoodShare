@@ -1,59 +1,58 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <!-- Make site responsive on mobile/tablet -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>FoodShare</title>
-       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-      <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"> 
-    </head>
-    <body>
-        <!-- THIS NAV NEEDS WORK -->
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <a class="navbar-brand" href="/">FoodShare</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item <%= typeof page !== 'undefined' && page === 'recipes' ? 'active' : '' %>">
-            <a href="/recipes" class="nav-link">Home</a>
-          </li>
-            <li class="nav-item <%= typeof page !== 'undefined' && page === 'about' ? 'active' : '' %>">
-            <a href="/about" class="nav-link">About</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-            <% if(!currentUser){ %>
-                <li class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
-                  <a href="/login" class="nav-link">Login</a>
+
+<head>
+    <!-- Make site responsive on mobile/tablet -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FoodShare</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+</head>
+
+<body>
+    <div>
+        <nav id="navbar">
+            <a style="color: black;" href="/">
+                <img src="/images/foodshare-logo-GIMP-black.png" id="foodshare-logo">
+                <b>FOOD</b>SHARE</a>
+            <ul>
+                <li><a href="/recipes">Recipes</a></li>
+                <li><a href="recipes/new">Add Recipe</a></li>
+                <li><a href="/about">About</a></li>
+                <% if(!currentUser){ %>
+                <li id="navbar-right" class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>">
+                    <a href="/login">Login</a>
                 </li>
                 <li class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>">
-                  <a href="/register" class="nav-link">Sign Up</a>
+                    <a href="/register">Sign Up</a>
                 </li>
-            <% } else { %>
-                <li class="nav-item">
-                  <a href="#" class="nav-link">Signed In As: <%= currentUser.username %></a>
+                <% } else { %>
+                <li id="navbar-right">
+                    <a href="/users/<%=currentUser._id %>">Signed In As: <%= currentUser.username %></a>
                 </li>
-                <li class="nav-item">
-                  <a href="/logout" class="nav-link">Logout</a>
+                <li>
+                    <a href="/logout">Logout</a>
                 </li>
-            <% } %>
-        </ul>
-      </div>
-    </nav>
-        
+                <% } %>
+            </ul>
+        </nav>
+
+        <br>
+        <!-- flash -->
         <div class="container">
             <% if (error && error.length > 0){ %>
-                <div class="alert alert-danger" role="alert">
-                    <%= error %> 
-                </div> 
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
             <% } %>
             <% if (success && success.length > 0){ %>
             <div class="alert alert-success" role="alert">
-                    <%= success %> 
-                </div>
+                <%= success %>
+            </div>
             <% } %>
         </div>
-        <div class="container">
+        <!-- flash end -->

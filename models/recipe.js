@@ -1,30 +1,31 @@
-var mongoose    = require("mongoose");
+var mongoose = require("mongoose");
 
-//SCHEMA SETUP (This is the 'blue print' for the model)
+var recipeSchema = new mongoose.Schema({
 
-var recipeSchema = new mongoose.Schema ({
-      
     name: String,
     price: String,
     image: String,
     description: String,
-    createdAt: { type: Date, default: Date.now},
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
     author: {
-        
+
         id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref:    "User"
-        }, 
+            ref: "User"
+        },
         username: String
     },
-    
-   comments: [
+
+    comments: [
         {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment"
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
     }
     ],
-    
+
     reviews: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -35,10 +36,7 @@ var recipeSchema = new mongoose.Schema ({
         type: Number,
         default: 0
     }
-    
-    });
 
-
-//COMPILE THE SCHEMA INTO A MODEL (this includes the methods e.g find())
+});
 
 module.exports = mongoose.model("Recipe", recipeSchema);

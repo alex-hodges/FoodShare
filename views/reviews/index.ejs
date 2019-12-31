@@ -23,7 +23,9 @@
                     <p>
                         Current recipe rating: <strong><%= recipe.rating.toFixed(2) %></strong>
                     </p>
-                    <p><h4>All reviews for this recipe:</h4></p>
+                    <p>
+                        <h4>All reviews for this recipe:</h4>
+                    </p>
                     <hr style="margin-top: 0;">
                     <% recipe.reviews.forEach(function(review){ %>
                     <div class="row">
@@ -37,8 +39,7 @@
                                 <%= review.text %>
                             </p>
                             <% if(currentUser && review.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-xs btn-warning"
-                               href="/recipes/<%=recipe._id %>/reviews/<%=review._id %>/edit">Edit</a>
+                            <a class="btn btn-xs btn-warning" href="/recipes/<%=recipe._id %>/reviews/<%=review._id %>/edit">Edit</a>
                             <form id="delete-form" action="/recipes/<%=recipe._id %>/reviews/<%=review._id %>?_method=DELETE" method="POST">
                                 <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                             </form>

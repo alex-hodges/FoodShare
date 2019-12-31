@@ -1,24 +1,29 @@
 <% include ../partials/header %>
 
-<div class="row">
-	<div class="col-md-4">
-			<h1><%= user.firstName + " " + user.lastName %></h1>
-		<div class="thumbnail">
-			<img src="<%= user.avatar %>" alt="user profile image">
-			<div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
-		</div>
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
+<div class="container">
+    <div class="display-inline">
+        <img src="<%= user.avatar %>" alt="user profile image" id="user-profile-image">
+        <h1><%= user.firstName + " " + user.lastName %></h1>
+    </div>
+    <div class="thumbnail text-spacing">
+        <div class="caption"><b>Email: </b><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
+    </div>
+    <br>
 
-		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error quasi similique architecto ad modi sunt quaerat possimus, officiis quos. Voluptatibus repellendus exercitationem, id saepe sunt consectetur non quam sapiente assumenda.
-	</div>
-	<div class="col-md-8">
-		<h3><%= user.username %>'s recipes:</h3>
-		<ul>
-		<% recipes.forEach(function(recipe) { %>
-			<li><a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a></li>
-		<% }); %>
-		</ul>
-	</div>
+    <div class="text-spacing" style="width; 100px;">
+        <h3>Bio</h3>
+        <p class="text-spacing"><%= user.biography %></p>
+    </div>
+
+    <br>
+    <div class="col-md-8 text-spacing">
+        <h3><%= user.username %>'s recipes:</h3>
+        <ul class="text-spacing">
+            <% recipes.forEach(function(recipe) { %>
+            <li><a href="/recipes/<%= recipe.id %>"><%= recipe.name %></a></li>
+            <% }); %>
+        </ul>
+    </div>
 </div>
 
 <% include ../partials/footer %>
