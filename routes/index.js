@@ -11,7 +11,7 @@ var crypto = require("crypto");
 //ROOT ROUTE
 //==========
 router.get("/", function (req, res) {
-    res.render("landing");
+    res.render("recipes/index");
 });
 
 //===========
